@@ -7,10 +7,16 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import controller.JarApp;
+import controller.JarUsers;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Logger {
+public class Logger{
 
 	private JFrame frame;
 	private JTextField loggTF;
@@ -22,14 +28,19 @@ public class Logger {
 	private JLabel label_1;
 	private JLabel label_2;
 
+	static Logger window;
+	
+	private JarUsers jarUs = JarUsers.run();
+//	private JarApp jarApp = new JarApp.run();
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void start(String[] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Logger window = new Logger();
+					window = new Logger();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,8 +73,25 @@ public class Logger {
 		passTF.setColumns(10);
 		
 		exitBtn = new JButton("Выход");
+		exitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//				jarApp.exit();
+				jarUs.close();
+				System.exit(42);
+			}
+		});
 		
 		enterBtn = new JButton("Войти");
+		enterBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+//				jarApp.enter();
+				if (jarUs.serarch(loggTF.getText(), passTF.getText())) {
+//					jarApp.switchFrame();
+					Cabinet.start();
+					window.frame.setVisible(false);
+				};
+			}
+		});
 		
 		regBtn = new JButton("Зарегистрироваться");
 		

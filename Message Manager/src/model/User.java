@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
-//	private int id;
+	private static final long serialVersionUID = 4159463741974037776L;
+
 	private String login;
 	private String password;
 	private String name;
@@ -62,9 +64,11 @@ public class User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-//		result = prime * result + id;
+		result = prime * result + ((chats == null) ? 0 : chats.hashCode());
+		result = prime * result + ((contacts == null) ? 0 : contacts.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + (online ? 1231 : 1237);
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
@@ -78,8 +82,16 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-//		if (id != other.id)
-//			return false;
+		if (chats == null) {
+			if (other.chats != null)
+				return false;
+		} else if (!chats.equals(other.chats))
+			return false;
+		if (contacts == null) {
+			if (other.contacts != null)
+				return false;
+		} else if (!contacts.equals(other.contacts))
+			return false;
 		if (login == null) {
 			if (other.login != null)
 				return false;
@@ -89,6 +101,8 @@ public class User {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (online != other.online)
 			return false;
 		if (password == null) {
 			if (other.password != null)

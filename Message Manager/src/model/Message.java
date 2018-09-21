@@ -4,7 +4,8 @@ import java.util.List;
 
 public class Message {
 
-//	private int id;
+	
+	
 	private String text;
 	private User sender;
 	private Chat room;
