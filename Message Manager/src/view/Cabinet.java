@@ -18,9 +18,9 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JScrollPane;
 
-public class Cabinet {
+public class Cabinet extends App {
 
-	private JFrame frame;
+//	private JFrame frame;
 
 	/**
 	 * Launch the application.

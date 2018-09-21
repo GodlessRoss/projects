@@ -7,24 +7,36 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import controller.JarUsers;
+import model.User;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Registration {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField loggTF;
+	private JTextField passTF;
+	private JTextField aliceTF;
+	
+	static Registration window;
+	private JButton canselBtn;
+
+	
+	private JarUsers jarUs = JarUsers.run();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void start(String[] args) {
+	public static void start() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Registration window = new Registration();
+					window = new Registration();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,18 +61,38 @@ public class Registration {
 		frame.setBounds(100, 100, 256, 301);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		loggTF = new JTextField();
+		loggTF.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		passTF = new JTextField();
+		passTF.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		aliceTF = new JTextField();
+		aliceTF.setColumns(10);
 		
-		JButton button = new JButton("Применить");
+		JButton addBtn = new JButton("Применить");
+		addBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (loggTF.getText() != null && passTF.getText() != null && aliceTF.getText() != null) {
+					User temp = new User(loggTF.getText(), passTF.getText(), aliceTF.getText());
+					if (jarUs.add(temp)) {
+						System.out.println("Пользователь добавлен");
+						Logger.start();
+						window.frame.setVisible(false);
+					} else {
+						System.out.println("Ошибка добавления");
+					}
+				}
+			}
+		});
 		
-		JButton button_1 = new JButton("Отмена");
+		canselBtn = new JButton("Отмена");
+		canselBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					Logger.start();
+					window.frame.setVisible(false);
+			}
+		});
 		
 		JLabel label = new JLabel("Логин");
 		
@@ -76,9 +108,9 @@ public class Registration {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(button)
+							.addComponent(addBtn)
 							.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-							.addComponent(button_1))
+							.addComponent(canselBtn))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -87,9 +119,9 @@ public class Registration {
 								.addComponent(label_2))
 							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-								.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-								.addComponent(textField, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
+								.addComponent(aliceTF, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+								.addComponent(passTF, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+								.addComponent(loggTF, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(60)
 							.addComponent(label_3)))
@@ -102,20 +134,20 @@ public class Registration {
 					.addComponent(label_3)
 					.addGap(29)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(loggTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(passTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label_1))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(aliceTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label_2))
 					.addPreferredGap(ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(button)
-						.addComponent(button_1))
+						.addComponent(addBtn)
+						.addComponent(canselBtn))
 					.addGap(24))
 		);
 		frame.getContentPane().setLayout(groupLayout);

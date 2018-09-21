@@ -20,6 +20,17 @@ public class User implements Serializable {
 		contacts = new ArrayList<>();
 	}
 
+	public User(String login, String password, String name) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.name = name;
+	}
+	
+	public User() {
+		
+	}
+
 	public List<User> getContacts() {
 		return contacts;
 	}

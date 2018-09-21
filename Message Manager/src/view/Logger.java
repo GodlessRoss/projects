@@ -31,12 +31,15 @@ public class Logger{
 	static Logger window;
 	
 	private JarUsers jarUs = JarUsers.run();
-//	private JarApp jarApp = new JarApp.run();
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		start();
+	}
+	
+	public static void start() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -84,9 +87,7 @@ public class Logger{
 		enterBtn = new JButton("Войти");
 		enterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				jarApp.enter();
 				if (jarUs.serarch(loggTF.getText(), passTF.getText())) {
-//					jarApp.switchFrame();
 					Cabinet.start();
 					window.frame.setVisible(false);
 				};
@@ -94,6 +95,12 @@ public class Logger{
 		});
 		
 		regBtn = new JButton("Зарегистрироваться");
+		regBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+					Registration.start();
+					window.frame.setVisible(false);
+			}
+		});
 		
 		label = new JLabel("Логин");
 		

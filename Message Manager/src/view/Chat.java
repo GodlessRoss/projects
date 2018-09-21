@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import javax.swing.JSeparator;
 
-public class Chat {
+public class Chat extends App{
 
 	private JFrame frame;
 	private JTextField textField;

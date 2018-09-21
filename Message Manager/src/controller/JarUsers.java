@@ -64,6 +64,7 @@ public final class JarUsers {
 
 	public boolean add(User user) {
 		if (users.add(user)) {
+			write();
 			return true;
 		}
 		return false;
