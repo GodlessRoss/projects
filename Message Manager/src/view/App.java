@@ -1,11 +1,17 @@
 package view;
 
-import javax.swing.JFrame;
+import model.Aliases;
 
 public abstract class App {
-	protected JFrame frame;
+	
+	private Aliases aliece;
 
-	public JFrame getFrame() {
-		return frame;
+	public Aliases getAliece() {
+		return aliece;
 	}
+
+	public void setAliece(Aliases aliece) {
+		this.aliece = aliece;
+	}
+	
 }

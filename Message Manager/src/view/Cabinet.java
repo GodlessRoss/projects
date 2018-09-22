@@ -3,33 +3,38 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JList;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
 import javax.swing.JToolBar;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-import java.awt.Component;
-import javax.swing.Box;
+
+import controller.JarUsers;
+import model.User;
+
 import javax.swing.JScrollPane;
+import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 
-public class Cabinet extends App {
+public class Cabinet {
 
-//	private JFrame frame;
+	private JFrame frame;
+	private static Cabinet window;
+	private JLabel aliceLB;
+	private JButton contactsBtn;
+	private JButton deleteBtn;
+	
+	private User user;
+	
+	private JarUsers jarUs = JarUsers.run();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void start() {
+	public static void start(User user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Cabinet window = new Cabinet();
+					window = new Cabinet(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,8 +46,15 @@ public class Cabinet extends App {
 	/**
 	 * Create the application.
 	 */
-	public Cabinet() {
+	public Cabinet(User user) {
+		this.user = user;
 		initialize();
+		downloadUserData();
+	}
+
+	private void downloadUserData() {
+//		statusLB = user.isOnline();
+		aliceLB.setText(user.getName());
 	}
 
 	/**
@@ -50,41 +62,37 @@ public class Cabinet extends App {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 361, 347);
+		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JToolBar toolBar = new JToolBar();
 		toolBar.setOrientation(SwingConstants.VERTICAL);
 		frame.getContentPane().add(toolBar, BorderLayout.WEST);
-		toolBar.setFloatable(false);
 		
-		JLabel lblStatus = new JLabel("status");
-		toolBar.add(lblStatus);
-		
-		JLabel lblAlice = new JLabel("alice");
-		toolBar.add(lblAlice);
+		aliceLB = new JLabel("nameUsr");
+		toolBar.add(aliceLB);
 		
 		JLabel lblNewLabel = new JLabel("--------------");
 		toolBar.add(lblNewLabel);
 		
-		JButton button_1 = new JButton("Контакты");
-		toolBar.add(button_1);
-		
-		JLabel label_1 = new JLabel("--------------");
-		toolBar.add(label_1);
-		
-		JButton button_3 = new JButton("Открыть");
-		toolBar.add(button_3);
-		
-		JButton button_2 = new JButton("Удалить");
-		toolBar.add(button_2);
+		contactsBtn = new JButton("Контакты");
+		toolBar.add(contactsBtn);
 		
 		JLabel label = new JLabel("--------------");
 		toolBar.add(label);
 		
-		JButton button = new JButton("Выход");
-		toolBar.add(button);
+		JButton openBtn = new JButton("Открыть");
+		toolBar.add(openBtn);
+		
+		deleteBtn = new JButton("Удалить");
+		toolBar.add(deleteBtn);
+		
+		JLabel label_1 = new JLabel("--------------");
+		toolBar.add(label_1);
+		
+		JButton exitBtn = new JButton("Выход");
+		toolBar.add(exitBtn);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -92,4 +100,5 @@ public class Cabinet extends App {
 		JList list = new JList();
 		scrollPane.setViewportView(list);
 	}
+
 }

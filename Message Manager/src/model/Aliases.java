@@ -1,5 +1,5 @@
 package model;
 
 public enum Aliases {
-	LOGGER, MAIN
+	LOGGER, MAIN, CABINET, CHAT, CONTACTS, REGG;
 }

@@ -19,7 +19,7 @@ public class User implements Serializable {
 	{
 		contacts = new ArrayList<>();
 	}
-
+	
 	public User(String login, String password, String name) {
 		super();
 		this.login = login;
@@ -39,8 +39,11 @@ public class User implements Serializable {
 		return chats;
 	}
 
-	public boolean isOnline() {
-		return online;
+	public String isOnline() {
+		if (online) {
+			return "online";
+		}
+		return "offline";
 	}
 
 	public void setOnline(boolean online) {

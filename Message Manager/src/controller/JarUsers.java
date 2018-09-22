@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import model.User;
 
 public final class JarUsers {
@@ -36,7 +38,6 @@ public final class JarUsers {
 	}
 
 	private JarUsers() {
-
 	}
 
 	private static boolean downloadData() {
@@ -63,9 +64,20 @@ public final class JarUsers {
 	}
 
 	public boolean add(User user) {
-		if (users.add(user)) {
-			write();
-			return true;
+		if (!repeatCheck(user)) {
+			if (users.add(user)) {
+				write();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean repeatCheck(User user) {
+		for (User u : users) {
+			if (u != null && u.getLogin().equals(user.getLogin()) || u.getName().equals(user.getName())) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -85,7 +97,7 @@ public final class JarUsers {
 		}
 		return false;
 	}
-	
+
 	public boolean serarch(String log, String pass) {
 		for (User u : users) {
 			if (u != null && u.getLogin().equals(log) && u.getPassword().equals(pass)) {
@@ -95,10 +107,10 @@ public final class JarUsers {
 		return false;
 	}
 
-	public void close() {
-//		write();
-	}
-	
+	/*
+	 * public void close() { write(); }
+	 */
+
 	public void write() {
 		ObjectOutputStream writer = null;
 		try {
@@ -141,5 +153,14 @@ public final class JarUsers {
 		temp.setPassword("admin");
 		temp.setName("default");
 		return temp;
+	}
+
+	public User getUser(String text) {
+		for (User user : users) {
+			if (user != null && user.getLogin() != null && user.getLogin().equals(text)) {
+				return user;
+			}
+		}
+		return null;
 	}
 }
