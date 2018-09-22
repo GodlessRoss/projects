@@ -10,12 +10,15 @@ import javax.swing.JList;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
+import model.Chat;
 import model.User;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import javax.swing.JSeparator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Dialog extends App {
 
@@ -29,6 +32,7 @@ public class Dialog extends App {
 	private JLabel interlocutorLB;
 
 	private static Dialog window;
+	private Chat chat;
 	
 	/**
 	 * Launch the application.
@@ -95,6 +99,10 @@ public class Dialog extends App {
 		textField.setColumns(10);
 
 		JButton button = new JButton("Отправить");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		toolBar_1.add(button);
 
 		JScrollPane scrollPane = new JScrollPane();

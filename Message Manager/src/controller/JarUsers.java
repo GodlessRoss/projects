@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+import model.Chat;
 import model.User;
 
 public final class JarUsers {
@@ -147,15 +148,28 @@ public final class JarUsers {
 		}
 	}
 
+	
+	// test
 	private static User createDefaultUser() {
-		User temp = new User();
-		temp.setLogin("admin");
-		temp.setPassword("admin");
-		temp.setName("default");
-		return temp;
+		User tempUser = new User();
+		tempUser.setLogin("admin");
+		tempUser.setPassword("admin");
+		tempUser.setName("default");
+		
+		Chat tempChat = new Chat();
+		tempChat.setTitle("Test");
+		tempChat.addUser(tempUser);
+		
+		tempUser.addChats(tempChat);
+		tempUser.addChats(tempChat);
+			
+		tempUser.addContact(tempUser);
+		tempUser.addContact(tempUser);
+
+		return tempUser;
 	}
 
-	public User getUser(String text) {
+	public User getUserForLog(String text) {
 		for (User user : users) {
 			if (user != null && user.getLogin() != null && user.getLogin().equals(text)) {
 				return user;

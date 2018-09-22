@@ -86,7 +86,7 @@ public class Logger extends App {
 		enterBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (jarUs.serarch(loggTF.getText(), passTF.getText())) {
-					User temp = jarUs.getUser(loggTF.getText());
+					User temp = jarUs.getUserForLog(loggTF.getText());
 					Cabinet.start(temp);
 					temp.setOnline(true);
 					window.frame.setVisible(false);

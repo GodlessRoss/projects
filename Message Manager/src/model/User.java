@@ -6,8 +6,6 @@ import java.util.List;
 
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 4159463741974037776L;
-
 	private String login;
 	private String password;
 	private String name;
@@ -18,17 +16,18 @@ public class User implements Serializable {
 
 	{
 		contacts = new ArrayList<>();
+		chats = new ArrayList<>();
 	}
-	
+
 	public User(String login, String password, String name) {
 		super();
 		this.login = login;
 		this.password = password;
 		this.name = name;
 	}
-	
+
 	public User() {
-		
+
 	}
 
 	public List<User> getContacts() {
@@ -74,8 +73,35 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public int hashCode() {
+	public boolean addContact(User contact) {
+		if (contacts.add(contact)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean addChats(Chat chat) {
+		if (chats.add(chat)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean removeContact(User contact) {
+		if (contacts.remove(contact)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean removeChat(Chat chat) {
+		if (chats.remove(chat)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((chats == null) ? 0 : chats.hashCode());

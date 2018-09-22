@@ -4,23 +4,44 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
+
+import model.User;
+
 import java.awt.BorderLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
+
+import controller.JarUsers;
 
 public class Contacts extends App {
 
+	private static Contacts window;
+
 	private JFrame frame;
+
+	User user;
+	private JList<String> listContacts;
+	private JButton addChatBtn;
+	private JButton addContactBtn;
+	private JButton deleteContactBtn;
+
+	private JarUsers jarUs = JarUsers.run();
+	private DefaultListModel<String> dlm;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void start(String[] args) {
+	public static void start(User user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Contacts window = new Contacts();
+					window = new Contacts(user);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,8 +53,28 @@ public class Contacts extends App {
 	/**
 	 * Create the application.
 	 */
-	public Contacts() {
+	public Contacts(User user) {
+		this.user = user;
 		initialize();
+		downloadUserData();
+	}
+
+	private void downloadUserData() {
+		downloadContacts();
+		listContacts.setModel(dlm);
+	}
+
+	private void downloadContacts() {
+		dlm = new DefaultListModel<>();
+		try {
+			if (!user.getContacts().isEmpty()) {
+				for (User contact : user.getContacts()) {
+					dlm.addElement(contact.getName());
+				}
+			}
+		} catch (NullPointerException e) {
+			System.out.println("Контакты отсутствуют");
+		}
 	}
 
 	/**
@@ -45,22 +86,57 @@ public class Contacts extends App {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JToolBar toolBar = new JToolBar();
+		toolBar.setFloatable(false);
 		frame.getContentPane().add(toolBar, BorderLayout.NORTH);
 
-		JButton button_2 = new JButton("Начать чат");
-		toolBar.add(button_2);
+		addChatBtn = new JButton("Начать чат");
+		addChatBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				startChat();
+			}
 
-		JButton button = new JButton("Добавить");
-		toolBar.add(button);
+		});
+		toolBar.add(addChatBtn);
 
-		JButton button_1 = new JButton("Удалить");
-		toolBar.add(button_1);
+		addContactBtn = new JButton("Добавить");
+		addContactBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addNewContact();
+			}
+		});
+		toolBar.add(addContactBtn);
+
+		deleteContactBtn = new JButton("Удалить");
+		deleteContactBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				removeContact();
+			}
+		});
+		toolBar.add(deleteContactBtn);
 
 		JScrollPane scrollPane = new JScrollPane();
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-		JList list = new JList();
-		scrollPane.setViewportView(list);
+		listContacts = new JList();
+		listContacts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(listContacts);
+	}
+	
+	protected void removeContact() {
+		String temp = listContacts.getSelectedValue();
+		dlm.remove(listContacts.getSelectedIndex());
+		listContacts.remove(listContacts.getSelectedIndex());
+		user.removeContact(jarUs.getUserForLog(temp));
+	}
+
+	protected void addNewContact() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void startChat() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
