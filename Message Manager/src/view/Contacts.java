@@ -117,26 +117,30 @@ public class Contacts extends App {
 		JScrollPane scrollPane = new JScrollPane();
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-		listContacts = new JList();
+		listContacts = new JList<>();
 		listContacts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listContacts);
 	}
-	
+
 	protected void removeContact() {
 		String temp = listContacts.getSelectedValue();
-		dlm.remove(listContacts.getSelectedIndex());
-		listContacts.remove(listContacts.getSelectedIndex());
-		user.removeContact(jarUs.getUserForLog(temp));
+		try {
+			dlm.remove(listContacts.getSelectedIndex());
+			user.removeContact(jarUs.getUserForAlice(temp));
+			System.out.println("Контакт удален");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Контакт не выбран");
+		}
 	}
 
 	protected void addNewContact() {
-		// TODO Auto-generated method stub
-		
+		AllContacts.start(user);
+		window.frame.setVisible(false);
 	}
 
 	private void startChat() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

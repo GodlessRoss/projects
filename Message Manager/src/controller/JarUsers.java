@@ -148,21 +148,20 @@ public final class JarUsers {
 		}
 	}
 
-	
 	// test
 	private static User createDefaultUser() {
 		User tempUser = new User();
 		tempUser.setLogin("admin");
 		tempUser.setPassword("admin");
 		tempUser.setName("default");
-		
+
 		Chat tempChat = new Chat();
 		tempChat.setTitle("Test");
 		tempChat.addUser(tempUser);
-		
+
 		tempUser.addChats(tempChat);
 		tempUser.addChats(tempChat);
-			
+
 		tempUser.addContact(tempUser);
 		tempUser.addContact(tempUser);
 
@@ -176,5 +175,22 @@ public final class JarUsers {
 			}
 		}
 		return null;
+	}
+
+	public User getUserForAlice(String text) {
+		for (User user : users) {
+			if (user != null && user.getName() != null && user.getName().equals(text)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
+	public static List<User> getUsers() {
+		return users;
+	}
+
+	public static void setUsers(List<User> users) {
+		JarUsers.users = users;
 	}
 }

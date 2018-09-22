@@ -7,7 +7,7 @@ import java.awt.BorderLayout;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-//import controller.JarUsers;
+import controller.JarUsers;
 import model.Chat;
 import model.User;
 
@@ -29,7 +29,7 @@ public class Cabinet {
 	private JButton deleteBtn;
 
 	private User user;
-//	private JarUsers jarUs = JarUsers.run();
+	private JarUsers jarUs = JarUsers.run();
 	private JList<String> listChats;
 	private DefaultListModel<String> dlm;
 
@@ -68,10 +68,10 @@ public class Cabinet {
 	private void downloadChats() {
 		dlm = new DefaultListModel<>();
 		try {
-		if (!user.getChats().isEmpty()) {
-			for (Chat chat : user.getChats()) {
-				dlm.addElement(chat.getTitle());
-			}
+			if (!user.getChats().isEmpty()) {
+				for (Chat chat : user.getChats()) {
+					dlm.addElement(chat.getTitle());
+				}
 			}
 		} catch (NullPointerException e) {
 			System.out.println("Чаты отсутсвуют.");
@@ -113,6 +113,11 @@ public class Cabinet {
 		toolBar.add(openBtn);
 
 		deleteBtn = new JButton("Удалить");
+		deleteBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				removeChat();
+			}
+		});
 		toolBar.add(deleteBtn);
 
 		JLabel label_1 = new JLabel("--------------");
@@ -126,6 +131,17 @@ public class Cabinet {
 
 		listChats = new JList<>();
 		scrollPane.setViewportView(listChats);
+	}
+
+	protected void removeChat() {
+		String temp = listChats.getSelectedValue();
+		try {
+			dlm.remove(listChats.getSelectedIndex());
+			user.removeContact(jarUs.getUserForAlice(temp));
+			System.out.println("Чат удален");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Чат не выбран");
+		}
 	}
 
 }
